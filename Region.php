@@ -3,7 +3,7 @@
  * @Author: Wang chunsheng  email:2192138785@qq.com
  * @Date:   2020-05-12 14:46:30
  * @Last Modified by:   Wang chunsheng  email:2192138785@qq.com
- * @Last Modified time: 2020-05-12 14:46:30
+ * @Last Modified time: 2020-05-12 19:17:18
  */
  
 namespace diandi\region;
@@ -56,6 +56,14 @@ class Region extends Widget
         if (empty($this->city['options']['prompt'])) {
             $this->city['options']['prompt'] = '选择城市';
         }
+
+        if (empty($this->province['options']['class'])) {
+            $this->province['options']['class'] = 'form-control-inline';
+        }
+
+        if (empty($this->city['options']['class'])) {
+            $this->city['options']['class'] = 'form-control-inline';
+        }
         $cityDefault = Html::renderSelectOptions('city', ['' => $this->city['options']['prompt']]);
 
         $joinChar = strripos($this->url, '?') ? '&' : '?';
@@ -64,6 +72,9 @@ class Region extends Widget
         if (!empty($this->district)) {
             if (empty($this->district['options']['prompt'])) {
                 $this->district['options']['prompt'] = '选择县/区';
+            }
+            if (empty($this->district['options']['class'])) {
+                $this->district['options']['class'] = 'form-control-inline';
             }
             $districtId = Html::getInputId($this->model, $this->district['attribute']);
             $districtDefault = Html::renderSelectOptions('district', ['' => $this->district['options']['prompt']]);
@@ -105,7 +116,14 @@ class Region extends Widget
             $output[] = Html::activeDropDownList($this->model, $this->district['attribute'], $this->district['items'],
                 $this->district['options']);
         }
-        return @implode("\n", $output);
+
+        return html::tag('div',@implode("\n", $output),[
+            'class'=>'col-xs-12 col-sm-12 col-md-12 col-lg-12',
+            'style'=>'padding-left:0px;padding-right:0px;margin-bottom: 10px;'
+        ]);
+        
+        // p($output);
+        // return @implode("\n", $output);
     }
 
 }
